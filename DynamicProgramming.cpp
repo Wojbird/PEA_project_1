@@ -6,7 +6,7 @@
 
 DynamicProgramming::DynamicProgramming() {
     minSum = INT_MAX;
-    shortestPath = nullptr;
+    path = nullptr;
 }
 
 int heldKarp(int** matrix, int V, int** dp, int** path, int visited, int mask, int city){
@@ -34,18 +34,25 @@ void DynamicProgramming::dynamic_programming(int **matrix, int V){
     int visited = (1<<V) - 1;//maska binarna dla ostatniego wierzchołka (2^V-1)
     int n = 1<<V;//maska binarna dla liczby wierzchołków (liczba możliwych permutacji) (2^V)
     int **dp = new int *[n];//tablica minimalnych dróg dla danego podproblemu
-    int **path = new int *[n];//tablica krawędzi
+    int **trace = new int *[n];//tablica krawędzi
     for(int i = 0; i < n; i++)//uzupełniamy danymi początkowymi
     {
         dp[i] = new int[V];
-        path[i] = new int[V];
+        trace[i] = new int[V];
         for(int j = 0; j < V; j++)
         {
             dp[i][j] = INT_MAX;
-            path[i][j] = -1;
+            trace[i][j] = -1;
         }
     }
-    minSum = heldKarp(matrix, V, dp, path, visited, 1, 0);//wytwarzamy kolejne permutacje i szukamy minimum
+    minSum = heldKarp(matrix, V, dp, trace, visited, 1, 0);//wytwarzamy kolejne permutacje i szukamy minimum
+    path = trace;
+}
+//do napisania funkcji skożystałem z:
+//link: https://iq.opengenus.org/travelling-salesman-problem-dp/
+
+void DynamicProgramming::display(int **matrix, int V){
+    int visited = (1<<V) - 1;//maska binarna dla ostatniego wierzchołka (2^V-1)
     int mask = 1<<0;//ustawiamy maskę binarną dla 0
     int i = 0;
     cout << "Miasta: ";//wyświetamy
@@ -56,10 +63,4 @@ void DynamicProgramming::dynamic_programming(int **matrix, int V){
     }
     cout << i << " -(" << matrix[i][0] << ")-> " << 0 << endl;
     cout << "Calkowita droga: " << minSum << endl;
-}
-//do napisania funkcji skożystałem z:
-//link: https://iq.opengenus.org/travelling-salesman-problem-dp/
-
-void DynamicProgramming::display(int **matrix, int V){
-
 }

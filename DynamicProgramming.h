@@ -17,7 +17,7 @@ class DynamicProgramming {
         void display(int **matrix, int V);
     private:
         int minSum;
-        int *shortestPath;
+        int **path;
 };
 
 

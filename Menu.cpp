@@ -205,6 +205,26 @@ void Menu::start(){
                 //link: http://staff.iiar.pwr.wroc.pl/antoni.sterna/sdizo/SDiZO_time.pdf
                 break;
             }
+            case 41:{
+                cout << endl;
+                long long int frequency, start, elapsed;
+                QueryPerformanceFrequency((LARGE_INTEGER *)&frequency);
+                start = read_QPC();
+
+                BFInstance.bruteforce(matrix, V);
+
+                elapsed = read_QPC() - start;
+
+                BFInstance.display(matrix, V);
+
+                cout << "Time [s] = " << fixed << setprecision(3) << (float)elapsed / (float)frequency << endl;
+                cout << "Time [ms] = " << setprecision(0) << (1000.0 * (double)elapsed) / (double)frequency << endl;
+                cout << "Time [us] = " << setprecision(0) << (1000000.0 * (double)elapsed) / (double)frequency << endl << endl;
+                system("PAUSE");
+                //do napisania funkcji skożystałem z:
+                //link: http://staff.iiar.pwr.wroc.pl/antoni.sterna/sdizo/SDiZO_time.pdf
+                break;
+            }
             case 5:{
                 cout << endl;
                 long long int frequency, start, elapsed;
@@ -214,6 +234,28 @@ void Menu::start(){
                 DPInstance.dynamic_programming(matrix, V);
 
                 elapsed = read_QPC() - start;
+
+                DPInstance.display(matrix, V);
+
+                cout << "Time [s] = " << fixed << setprecision(3) << (float)elapsed / (float)frequency << endl;
+                cout << "Time [ms] = " << setprecision(0) << (1000.0 * (double)elapsed) / (double)frequency << endl;
+                cout << "Time [us] = " << setprecision(0) << (1000000.0 * (double)elapsed) / (double)frequency << endl << endl;
+                system("PAUSE");
+                //do napisania funkcji skożystałem z:
+                //link: http://staff.iiar.pwr.wroc.pl/antoni.sterna/sdizo/SDiZO_time.pdf
+                break;
+            }
+            case 51:{
+                cout << endl;
+                long long int frequency, start, elapsed;
+                QueryPerformanceFrequency((LARGE_INTEGER *)&frequency);
+                start = read_QPC();
+
+                DPInstance.dynamic_programming(matrix, V);
+
+                elapsed = read_QPC() - start;
+
+                DPInstance.display(matrix, V);
 
                 cout << "Time [s] = " << fixed << setprecision(3) << (float)elapsed / (float)frequency << endl;
                 cout << "Time [ms] = " << setprecision(0) << (1000.0 * (double)elapsed) / (double)frequency << endl;
