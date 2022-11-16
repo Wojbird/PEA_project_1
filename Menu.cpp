@@ -206,20 +206,40 @@ void Menu::start(){
                 break;
             }
             case 41:{
+                int iterations, v;
+                cout << endl << "Podaj liczbe iteracji: ";
+                cin >> iterations;
+                cout << endl << "Podaj liczbe wierzcholkow: ";
+                cin >> v;
                 cout << endl;
                 long long int frequency, start, elapsed;
                 QueryPerformanceFrequency((LARGE_INTEGER *)&frequency);
                 start = read_QPC();
+                for (int ii = 0; ii < iterations; ii++){
+                    Bruteforce BF;
+                    V = v;
+                    int **newMatrix = new int *[v];
+                    for(int i = 0; i < v; i++){
+                        newMatrix[i] = new int [v];
+                        for(int j = 0; j < v; j++){
+                            newMatrix[i][j] = random();
+                        }
+                        newMatrix[i][i] = INT_MAX;
+                    }
+                    matrix = newMatrix;
 
-                BFInstance.bruteforce(matrix, V);
+                    BF.bruteforce(matrix, V);
 
-                elapsed = read_QPC() - start;
+                    elapsed = read_QPC() - start;
 
-                BFInstance.display(matrix, V);
+//                    BF.display(matrix, V);
 
-                cout << "Time [s] = " << fixed << setprecision(3) << (float)elapsed / (float)frequency << endl;
-                cout << "Time [ms] = " << setprecision(0) << (1000.0 * (double)elapsed) / (double)frequency << endl;
-                cout << "Time [us] = " << setprecision(0) << (1000000.0 * (double)elapsed) / (double)frequency << endl << endl;
+                    cout << ii+1 << "; ";
+                }
+                cout << endl;
+                cout << "Time [s] = " << fixed << setprecision(3) << (float)elapsed / (float)(frequency * iterations) << endl;
+                cout << "Time [ms] = " << setprecision(0) << (1000.0 * (double)elapsed) / (double)(frequency * iterations) << endl;
+                cout << "Time [us] = " << setprecision(0) << (1000000.0 * (double)elapsed) / (double)(frequency * iterations) << endl << endl;
                 system("PAUSE");
                 //do napisania funkcji skożystałem z:
                 //link: http://staff.iiar.pwr.wroc.pl/antoni.sterna/sdizo/SDiZO_time.pdf
@@ -246,20 +266,40 @@ void Menu::start(){
                 break;
             }
             case 51:{
+                int iterations, v;
+                cout << endl << "Podaj liczbe iteracji: ";
+                cin >> iterations;
+                cout << endl << "Podaj liczbe wierzcholkow: ";
+                cin >> v;
                 cout << endl;
                 long long int frequency, start, elapsed;
                 QueryPerformanceFrequency((LARGE_INTEGER *)&frequency);
                 start = read_QPC();
+                for (int ii = 0; ii < iterations; ii++){
+                    DynamicProgramming DP;
+                    V = v;
+                    int **newMatrix = new int *[v];
+                    for(int i = 0; i < v; i++){
+                        newMatrix[i] = new int [v];
+                        for(int j = 0; j < v; j++){
+                            newMatrix[i][j] = random();
+                        }
+                        newMatrix[i][i] = INT_MAX;
+                    }
+                    matrix = newMatrix;
 
-                DPInstance.dynamic_programming(matrix, V);
+                    DP.dynamic_programming(matrix, V);
 
-                elapsed = read_QPC() - start;
+                    elapsed = read_QPC() - start;
 
-                DPInstance.display(matrix, V);
+//                    DP.display(matrix, V);
 
-                cout << "Time [s] = " << fixed << setprecision(3) << (float)elapsed / (float)frequency << endl;
-                cout << "Time [ms] = " << setprecision(0) << (1000.0 * (double)elapsed) / (double)frequency << endl;
-                cout << "Time [us] = " << setprecision(0) << (1000000.0 * (double)elapsed) / (double)frequency << endl << endl;
+                    cout << ii+1 << "; ";
+                }
+                cout << endl;
+                cout << "Time [s] = " << fixed << setprecision(3) << (float)elapsed / (float)(frequency * iterations) << endl;
+                cout << "Time [ms] = " << setprecision(0) << (1000.0 * (double)elapsed) / (double)(frequency * iterations) << endl;
+                cout << "Time [us] = " << setprecision(0) << (1000000.0 * (double)elapsed) / (double)(frequency * iterations) << endl << endl;
                 system("PAUSE");
                 //do napisania funkcji skożystałem z:
                 //link: http://staff.iiar.pwr.wroc.pl/antoni.sterna/sdizo/SDiZO_time.pdf
