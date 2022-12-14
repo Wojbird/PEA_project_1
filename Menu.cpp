@@ -5,6 +5,7 @@
 #include "Menu.h"
 #include "DynamicProgramming.h"
 #include "Bruteforce.h"
+#include "SimulatingAnnealing.h"
 
 Menu::Menu()
 {
@@ -64,6 +65,7 @@ long long int read_QPC(){
 void Menu::start(){
     Bruteforce BFInstance;
     DynamicProgramming DPInstance;
+    SimulatingAnnealing SAInstance;
     srand(time(nullptr));
     again = true;
     cout << endl << "Implementacja algorytmu podzialu i ograniczen dla asymetrycznego problemu komiwojażera." << endl;
@@ -75,6 +77,7 @@ void Menu::start(){
         cout << "3) Wyswietlenie macierzy" << endl;
         cout << "4) Brute force." << endl;
         cout << "5) Programowanie dynamiczne." << endl;
+        cout << "6) Symulowane wyzarzanie." << endl;
         cout << "0) Zakoncz." << endl;
         cin >> choice;
         switch(choice){
@@ -215,8 +218,8 @@ void Menu::start(){
                 long long int frequency, start, elapsed;
                 QueryPerformanceFrequency((LARGE_INTEGER *)&frequency);
                 start = read_QPC();
+                Bruteforce BF;
                 for (int ii = 0; ii < iterations; ii++){
-                    Bruteforce BF;
                     V = v;
                     int **newMatrix = new int *[v];
                     for(int i = 0; i < v; i++){
@@ -232,7 +235,7 @@ void Menu::start(){
 
                     elapsed = read_QPC() - start;
 
-//                    BF.display(matrix, V);
+                    BF.display(matrix, V);
 
                     cout << ii+1 << "; ";
                 }
@@ -275,8 +278,8 @@ void Menu::start(){
                 long long int frequency, start, elapsed;
                 QueryPerformanceFrequency((LARGE_INTEGER *)&frequency);
                 start = read_QPC();
+                DynamicProgramming DP;
                 for (int ii = 0; ii < iterations; ii++){
-                    DynamicProgramming DP;
                     V = v;
                     int **newMatrix = new int *[v];
                     for(int i = 0; i < v; i++){
@@ -292,7 +295,67 @@ void Menu::start(){
 
                     elapsed = read_QPC() - start;
 
-//                    DP.display(matrix, V);
+                    DP.display(matrix, V);
+
+                    cout << ii+1 << "; ";
+                }
+                cout << endl;
+                cout << "Time [s] = " << fixed << setprecision(3) << (float)elapsed / (float)(frequency * iterations) << endl;
+                cout << "Time [ms] = " << setprecision(0) << (1000.0 * (double)elapsed) / (double)(frequency * iterations) << endl;
+                cout << "Time [us] = " << setprecision(0) << (1000000.0 * (double)elapsed) / (double)(frequency * iterations) << endl << endl;
+                system("PAUSE");
+                //do napisania funkcji skożystałem z:
+                //link: http://staff.iiar.pwr.wroc.pl/antoni.sterna/sdizo/SDiZO_time.pdf
+                break;
+            }
+            case 6:{
+                cout << endl;
+                long long int frequency, start, elapsed;
+                QueryPerformanceFrequency((LARGE_INTEGER *)&frequency);
+                start = read_QPC();
+
+                SAInstance.simulating_annealing(matrix, V);
+
+                elapsed = read_QPC() - start;
+
+                SAInstance.display(matrix, V);
+
+                cout << "Time [s] = " << fixed << setprecision(3) << (float)elapsed / (float)frequency << endl;
+                cout << "Time [ms] = " << setprecision(0) << (1000.0 * (double)elapsed) / (double)frequency << endl;
+                cout << "Time [us] = " << setprecision(0) << (1000000.0 * (double)elapsed) / (double)frequency << endl << endl;
+                system("PAUSE");
+                //do napisania funkcji skożystałem z:
+                //link: http://staff.iiar.pwr.wroc.pl/antoni.sterna/sdizo/SDiZO_time.pdf
+                break;
+            }
+            case 61:{
+                int iterations, v;
+                cout << endl << "Podaj liczbe iteracji: ";
+                cin >> iterations;
+                cout << endl << "Podaj liczbe wierzcholkow: ";
+                cin >> v;
+                cout << endl;
+                long long int frequency, start, elapsed;
+                QueryPerformanceFrequency((LARGE_INTEGER *)&frequency);
+                start = read_QPC();
+                SimulatingAnnealing SA;
+                for (int ii = 0; ii < iterations; ii++){
+                    V = v;
+                    int **newMatrix = new int *[v];
+                    for(int i = 0; i < v; i++){
+                        newMatrix[i] = new int [v];
+                        for(int j = 0; j < v; j++){
+                            newMatrix[i][j] = random();
+                        }
+                        newMatrix[i][i] = INT_MAX;
+                    }
+                    matrix = newMatrix;
+
+                    SA.simulating_annealing(matrix, V);
+
+                    elapsed = read_QPC() - start;
+
+                    SA.display(matrix, V);
 
                     cout << ii+1 << "; ";
                 }
