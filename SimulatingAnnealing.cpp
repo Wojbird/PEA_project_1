@@ -6,15 +6,26 @@
 
 SimulatingAnnealing::SimulatingAnnealing()
 {
+    startT = 1000.0;//temperatura pocz�tkowa
+    endT = 0.001;//temperatura ko�cowa
+    factor = 0.99;//zmiana temperatury
+    limit = 3000;//limit przeszukiwania
     minSum = 0;
     path = nullptr;
 }
 
+void SimulatingAnnealing::set_variables(double newStartT, double newEndT, double newFactor, int newLimit){
+    startT = newStartT;
+    endT = newEndT;
+    factor = newFactor;
+    limit = newLimit;
+}
+
 void SimulatingAnnealing::simulating_annealing(int** matrix, int V){
-    int startT = 1000;//temperatura pocz�tkowa
-    double endT = 0.001;//temperatura ko�cowa
-    double factor = 0.99;//zmiana temperatury
-    int limit = 3000;//limit przeszukiwania
+    double tempStartT = startT;
+    double tempEndT = endT;
+    double tempFactor = factor;
+    int tempLimit = limit;
     int temp;
     int *cities = new int[V];//tablica miast do generowania permutacji
     path = new int[V];;//tablica z najktr�trz� �cierzk�
@@ -29,8 +40,8 @@ void SimulatingAnnealing::simulating_annealing(int** matrix, int V){
     }
     minSum = sum = sum + matrix[cities[V - 1]][cities[0]];
     srand(time(NULL));
-    while(startT > endT){ //warunek zako�czenia
-        for(int i = 0; i < limit; i++){
+    while(tempStartT > tempEndT){ //warunek zako�czenia
+        for(int i = 0; i < tempLimit; i++){
             cities = path;
             sum = 0;
             int x = rand()%V;//losujemy nowe s�siednie u�o�enie
@@ -53,13 +64,13 @@ void SimulatingAnnealing::simulating_annealing(int** matrix, int V){
             }
             else{
                 double s = rand()/(RAND_MAX+1.0);//warto�� od 0 od 1
-                if (exp(-delta/startT) > s){//rozk�ad boltzmanna
+                if (exp(-delta/tempStartT) > s){//rozk�ad boltzmanna
                     path = cities;
                     minSum = sum;
                 }
             }
         }
-        startT *= factor;//geometrycznie zmieniamy temperatur�
+        tempStartT *= tempFactor;//geometrycznie zmieniamy temperatur�
     }
 }
 

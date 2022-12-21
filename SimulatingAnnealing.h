@@ -21,9 +21,14 @@ class SimulatingAnnealing {
     public:
         SimulatingAnnealing();
 
+        void set_variables(double newStartT, double newEndT, double newFactor, int newLimit);
         void simulating_annealing(int** matrix, int V);
         void display(int** matrix, int V);
     private:
+        double startT;
+        double endT;
+        double factor;
+        int limit;
         int minSum;
         int *path;
 };

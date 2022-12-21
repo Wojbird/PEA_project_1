@@ -73,11 +73,12 @@ void Menu::start(){
     while(again){
         cout << endl << "Wybierz opcje:" << endl;
         cout << "1) Wczytanie pliku." << endl;
-        cout << "2) Wczytanie losowej drogi" << endl;
-        cout << "3) Wyswietlenie macierzy" << endl;
-        cout << "4) Brute force." << endl;
-        cout << "5) Programowanie dynamiczne." << endl;
-        cout << "6) Symulowane wyzarzanie." << endl;
+        cout << "2) Wczytanie losowej drogi." << endl;
+        cout << "3) Wyswietlenie macierzy." << endl;
+        cout << "4) Zmiana zmiennych dla symulowanego wyzarzania." << endl;
+        cout << "5) Brute force." << endl;
+        cout << "6) Programowanie dynamiczne." << endl;
+        cout << "7) Symulowane wyzarzanie." << endl;
         cout << "0) Zakoncz." << endl;
         cin >> choice;
         switch(choice){
@@ -190,6 +191,21 @@ void Menu::start(){
             }
             case 4:{
                 cout << endl;
+                double newStartT, newEndT, newFactor;
+                int newLimit;
+                cout << endl << "Podaj temperature poczatkowa: " << endl;
+                cin >> newStartT;
+                cout << endl << "Podaj temperature koncowa: " << endl;
+                cin >> newEndT;
+                cout << endl << "Podaj zmiane temperatury: " << endl;
+                cin >> newFactor;
+                cout << endl << "Podaj limit przeszukiwania: " << endl;
+                cin >> newLimit;
+                SAInstance.set_variables(newStartT, newEndT, newFactor, newLimit);
+                break;
+            }
+            case 5:{
+                cout << endl;
                 long long int frequency, start, elapsed;
                 QueryPerformanceFrequency((LARGE_INTEGER *)&frequency);
                 start = read_QPC();
@@ -208,7 +224,7 @@ void Menu::start(){
                 //link: http://staff.iiar.pwr.wroc.pl/antoni.sterna/sdizo/SDiZO_time.pdf
                 break;
             }
-            case 41:{
+            case 51:{
                 int iterations, v;
                 cout << endl << "Podaj liczbe iteracji: ";
                 cin >> iterations;
@@ -248,7 +264,7 @@ void Menu::start(){
                 //link: http://staff.iiar.pwr.wroc.pl/antoni.sterna/sdizo/SDiZO_time.pdf
                 break;
             }
-            case 5:{
+            case 6:{
                 cout << endl;
                 long long int frequency, start, elapsed;
                 QueryPerformanceFrequency((LARGE_INTEGER *)&frequency);
@@ -268,7 +284,7 @@ void Menu::start(){
                 //link: http://staff.iiar.pwr.wroc.pl/antoni.sterna/sdizo/SDiZO_time.pdf
                 break;
             }
-            case 51:{
+            case 61:{
                 int iterations, v;
                 cout << endl << "Podaj liczbe iteracji: ";
                 cin >> iterations;
@@ -308,7 +324,7 @@ void Menu::start(){
                 //link: http://staff.iiar.pwr.wroc.pl/antoni.sterna/sdizo/SDiZO_time.pdf
                 break;
             }
-            case 6:{
+            case 7:{
                 cout << endl;
                 long long int frequency, start, elapsed;
                 QueryPerformanceFrequency((LARGE_INTEGER *)&frequency);
@@ -328,7 +344,7 @@ void Menu::start(){
                 //link: http://staff.iiar.pwr.wroc.pl/antoni.sterna/sdizo/SDiZO_time.pdf
                 break;
             }
-            case 61:{
+            case 71:{
                 int iterations, v;
                 cout << endl << "Podaj liczbe iteracji: ";
                 cin >> iterations;
