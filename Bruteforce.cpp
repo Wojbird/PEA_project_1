@@ -39,6 +39,7 @@ void Bruteforce::permutation(int** matrix, int* cities, int begin, int end, int 
 }
 
 void Bruteforce::bruteforce(int** matrix, int V){
+    minSum = INT_MAX;
     int cities[V];//tablica miast do generowania permutacji
     int* path = new int[V];//tablica z najktrótrzą ścierzkę
     for (int i = 0; i < V; i++){//uzupełniamy danymi początkowymi

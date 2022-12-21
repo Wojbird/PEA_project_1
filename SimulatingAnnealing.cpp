@@ -66,8 +66,8 @@ void SimulatingAnnealing::simulating_annealing(int** matrix, int V){
 void SimulatingAnnealing::display(int **matrix, int V) {
     cout << "Miasta: ";//wy�wietalmy �cie�k� + sum�
     for (int i = 0; i < V-1; i++){
-        cout << path[i] << " -" << matrix[path[i]][path[i+1]] << "-> ";
+        cout << path[i] << " -(" << matrix[path[i]][path[i+1]] << ")-> ";
     }
-    cout << path[V-1] << " -" << matrix[path[V-1]][path[0]] << "-> " << path[0] << endl;
+    cout << path[V-1] << " -(" << matrix[path[V-1]][path[0]] << ")-> " << path[0] << endl;
     cout << "Calkowita droga: " << minSum << endl;
 }
