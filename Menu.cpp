@@ -6,6 +6,7 @@
 #include "DynamicProgramming.h"
 #include "Bruteforce.h"
 #include "SimulatingAnnealing.h"
+#include "GeneticAlgorithm.h"
 
 Menu::Menu()
 {
@@ -68,6 +69,15 @@ void Menu::start(){
     SimulatingAnnealing SAInstance;
     srand(time(nullptr));
     again = true;
+
+    int bestVal = INT_MAX;//najlepszy wynik
+    int* bestRoad = new int [V];//tablica z wynikiem
+    int population_size = 100;//liczba osobnik�w w pokoleniu
+    int generations = 100;//liczba pokolen
+    float crossover_p = 0.85;//prawdopodobienstwo wyst�pienia krzyzowania
+    float mutation_p = 0.09;//prawdopodobienstwo mutacji
+    int tournament_size = 5;
+
     cout << endl << "Implementacja algorytmu podzialu i ograniczen dla asymetrycznego problemu komiwojażera." << endl;
     cout << endl << "Autor: Wojciech Makuch" << endl;
     while(again){
@@ -76,9 +86,11 @@ void Menu::start(){
         cout << "2) Wczytanie losowej drogi." << endl;
         cout << "3) Wyswietlenie macierzy." << endl;
         cout << "4) Zmiana zmiennych dla symulowanego wyzarzania." << endl;
-        cout << "5) Brute force." << endl;
-        cout << "6) Programowanie dynamiczne." << endl;
-        cout << "7) Symulowane wyzarzanie." << endl;
+        cout << "5) Zmiana zmiennych dla algorytmu genetycznego." << endl;
+        cout << "6) Brute force." << endl;
+        cout << "7) Programowanie dynamiczne." << endl;
+        cout << "8) Symulowane wyzarzanie." << endl;
+        cout << "9) Algotyrm Genetyczny." << endl;
         cout << "0) Zakoncz." << endl;
         cin >> choice;
         switch(choice){
@@ -205,6 +217,19 @@ void Menu::start(){
                 break;
             }
             case 5:{
+                cout << endl << "nowa populacja:" << endl;
+				cin >> population_size;
+				cout << endl << "nowa liczba pokolen:" << endl;
+				cin >> generations;
+				cout << endl << "nowy wspolczynnik krzyzowania:" << endl;
+				cin >> crossover_p;
+				cout << endl << "nowy wspolczynnik mutacji:" << endl;
+				cin >> mutation_p;
+				cout << endl << "nowy rozmiar turnieju:" << endl;
+				cin >> tournament_size;
+				break;
+            }
+            case 6:{
                 cout << endl;
                 long long int frequency, start, elapsed;
                 QueryPerformanceFrequency((LARGE_INTEGER *)&frequency);
@@ -224,7 +249,7 @@ void Menu::start(){
                 //link: http://staff.iiar.pwr.wroc.pl/antoni.sterna/sdizo/SDiZO_time.pdf
                 break;
             }
-            case 51:{
+            case 61:{
                 int iterations, v;
                 cout << endl << "Podaj liczbe iteracji: ";
                 cin >> iterations;
@@ -264,7 +289,7 @@ void Menu::start(){
                 //link: http://staff.iiar.pwr.wroc.pl/antoni.sterna/sdizo/SDiZO_time.pdf
                 break;
             }
-            case 6:{
+            case 7:{
                 cout << endl;
                 long long int frequency, start, elapsed;
                 QueryPerformanceFrequency((LARGE_INTEGER *)&frequency);
@@ -284,7 +309,7 @@ void Menu::start(){
                 //link: http://staff.iiar.pwr.wroc.pl/antoni.sterna/sdizo/SDiZO_time.pdf
                 break;
             }
-            case 61:{
+            case 71:{
                 int iterations, v;
                 cout << endl << "Podaj liczbe iteracji: ";
                 cin >> iterations;
@@ -324,7 +349,7 @@ void Menu::start(){
                 //link: http://staff.iiar.pwr.wroc.pl/antoni.sterna/sdizo/SDiZO_time.pdf
                 break;
             }
-            case 7:{
+            case 8:{
                 cout << endl;
                 long long int frequency, start, elapsed;
                 QueryPerformanceFrequency((LARGE_INTEGER *)&frequency);
@@ -344,7 +369,7 @@ void Menu::start(){
                 //link: http://staff.iiar.pwr.wroc.pl/antoni.sterna/sdizo/SDiZO_time.pdf
                 break;
             }
-            case 71:{
+            case 81:{
                 int iterations, v;
                 cout << endl << "Podaj liczbe iteracji: ";
                 cin >> iterations;
@@ -383,6 +408,38 @@ void Menu::start(){
                 //do napisania funkcji skożystałem z:
                 //link: http://staff.iiar.pwr.wroc.pl/antoni.sterna/sdizo/SDiZO_time.pdf
                 break;
+            }
+            case 9:{
+                bool mutation_t = true;//typ mutacji
+
+                cout << endl;
+                long long int frequency, start, elapsed;
+                QueryPerformanceFrequency((LARGE_INTEGER *)&frequency);
+                start = read_QPC();
+
+                GeneticAlgorithm* G = new GeneticAlgorithm(matrix, V, mutation_t);
+                G->solutionG(bestRoad, bestVal, tournament_size, mutation_p, crossover_p, population_size, generations);
+//				G->solutionG100(bestRoad, bestVal, tournament_size, mutation_p, crossover_p, population_size, generations);
+
+                elapsed = read_QPC() - start;
+                cout << "Time [s] = " << fixed << setprecision(3) << (float)elapsed / (float)frequency << endl;
+                cout << "Time [ms] = " << setprecision(0) << (1000.0 * (double)elapsed) / (double)frequency << endl;
+                cout << "Time [us] = " << setprecision(0) << (1000000.0 * (double)elapsed) / (double)frequency << endl << endl;
+                for (int i = 0; i < V-1; i++){
+                    cout << bestRoad[i] << " -(" << matrix[bestRoad[i]][bestRoad[i+1]] << ")-> ";
+                }
+                cout << bestRoad[V-1] << " -(" << matrix[bestRoad[V-1]][bestRoad[0]] << ")-> " << bestRoad[0] << endl;
+                cout << "Calkowita droga: " << bestVal << endl;
+
+                bestVal = INT_MAX;//najlepszy wynik
+                bestRoad = new int [V];//tablica z wynikiem
+
+                system("PAUSE");
+
+                break;
+            }
+            case 91:{
+
             }
             case 0:{
                 again = false;

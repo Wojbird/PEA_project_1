@@ -4,8 +4,7 @@
 
 #include "SimulatingAnnealing.h"
 
-SimulatingAnnealing::SimulatingAnnealing()
-{
+SimulatingAnnealing::SimulatingAnnealing(){
     startT = 1000.0;//temperatura pocz�tkowa
     endT = 0.001;//temperatura ko�cowa
     factor = 0.99;//zmiana temperatury
