@@ -90,7 +90,8 @@ void Menu::start(){
         cout << "6) Brute force." << endl;
         cout << "7) Programowanie dynamiczne." << endl;
         cout << "8) Symulowane wyzarzanie." << endl;
-        cout << "9) Algotyrm Genetyczny." << endl;
+        cout << "9) Algotyrm Genetyczny - Invert." << endl;
+        cout << "10) Algotyrm Genetyczny - Insert." << endl;
         cout << "0) Zakoncz." << endl;
         cin >> choice;
         switch(choice){
@@ -438,8 +439,34 @@ void Menu::start(){
 
                 break;
             }
-            case 91:{
+            case 10:{
+                bool mutation_t = false;//typ mutacji
 
+                cout << endl;
+                long long int frequency, start, elapsed;
+                QueryPerformanceFrequency((LARGE_INTEGER *)&frequency);
+                start = read_QPC();
+
+                GeneticAlgorithm* G = new GeneticAlgorithm(matrix, V, mutation_t);
+                G->solutionG(bestRoad, bestVal, tournament_size, mutation_p, crossover_p, population_size, generations);
+//				G->solutionG100(bestRoad, bestVal, tournament_size, mutation_p, crossover_p, population_size, generations);
+
+                elapsed = read_QPC() - start;
+                cout << "Time [s] = " << fixed << setprecision(3) << (float)elapsed / (float)frequency << endl;
+                cout << "Time [ms] = " << setprecision(0) << (1000.0 * (double)elapsed) / (double)frequency << endl;
+                cout << "Time [us] = " << setprecision(0) << (1000000.0 * (double)elapsed) / (double)frequency << endl << endl;
+                for (int i = 0; i < V-1; i++){
+                    cout << bestRoad[i] << " -(" << matrix[bestRoad[i]][bestRoad[i+1]] << ")-> ";
+                }
+                cout << bestRoad[V-1] << " -(" << matrix[bestRoad[V-1]][bestRoad[0]] << ")-> " << bestRoad[0] << endl;
+                cout << "Calkowita droga: " << bestVal << endl;
+
+                bestVal = INT_MAX;//najlepszy wynik
+                bestRoad = new int [V];//tablica z wynikiem
+
+                system("PAUSE");
+
+                break;
             }
             case 0:{
                 again = false;
